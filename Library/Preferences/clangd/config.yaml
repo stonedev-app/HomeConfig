@@ -1,0 +1,20 @@
+# clangd のグローバル設定（全プロジェクト共通で適用される）
+# 参照場所: macOS は ~/Library/Preferences/clangd/config.yaml
+#          Linux は ~/.config/clangd/config.yaml
+#
+# PlatformIO の ESP32/Arduino ツールチェイン(gcc)は clang(d) が解釈できない
+# GCC 専用フラグを付けてくるため、未知の引数エラーになる。
+# それらを明示的に無視させることでエラーを解消している。
+CompileFlags:
+  Remove:
+    - -fstrict-volatile-bitfields  # bitfield のvolatile扱いに関するGCC拡張（RISC-V/ESP32-C3系）
+    - -fno-tree-switch-conversion  # switch文の最適化制御に関するGCC拡張（RISC-V/ESP32-C3系）
+    - -mlongcalls               # Xtensa GCC専用の呼び出し規約フラグ（ESP32/S2/S3系）
+    - -mdisable-hardware-atomics  # Xtensa GCC専用のアトミック命令制御フラグ（ESP32/S2/S3系）
+
+# Xtensa (ESP32/S2/S3) は LLVM/clang にネイティブなコード生成サポートが無いため、
+# ツールチェインのヘッダが期待する __XTENSA__ 系マクロが定義されず
+# 「architecture not supported」という #error が必ず出る。実害はなく表示上のノイズなので抑制する。
+Diagnostics:
+  Suppress:
+    - pp_hash_error
