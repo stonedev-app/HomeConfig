@@ -1,2 +1,26 @@
 os:
   editPreset: nvim
+
+git:
+  # 差分表示を delta（シンタックスハイライト付きdiffページャー）に置き換える
+  # 最初はdelta標準の見た目（コードの色付け・背景塗りつぶし）にしていたが、
+  # 素のgit diffの見た目（赤/緑の文字色・行頭の+-）の方が見やすいという結論になり、
+  # 「変更箇所だけ強調表示される」というdeltaの利点だけを足す方向に寄せた
+  diffRenderers:
+    - type: stdinFilter
+      # git側では色付けしない。delta自身が生のdiffを解析して色・強調を付けるため
+      # （先に色付けされているとdeltaの解析に支障が出る可能性がある）
+      colorArg: never
+      command: >-
+        delta --paging=never
+        --syntax-theme=none
+        --minus-style="red" --plus-style="green"
+        --minus-emph-style="red bold ul" --plus-emph-style="green bold ul"
+        --keep-plus-minus-markers
+      # --paging=never          : ページングはlazygit側がやるのでdelta側では不要
+      # --syntax-theme=none     : コード自体のシンタックスハイライトはオフ（素のdiffに寄せる）
+      # --minus-style/plus-style: 削除行=赤文字、追加行=緑文字（背景の塗りつぶしなし）
+      # --minus-emph-style/plus-emph-style
+      #                         : 行の中で実際に変わった部分だけ太字+下線(ul)で強調
+      # --keep-plus-minus-markers
+      #                         : 行頭の `-`/`+` を残す（素のgit diffと同じ見た目にする）
