@@ -1,3 +1,5 @@
+# e キーでファイルを開くとき、$EDITOR ではなく nvim を使う（入れ子で起動する）
+# lazygitを抜けずにその場で修正できるようにするため
 os:
   editPreset: nvim
 
