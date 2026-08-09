@@ -27,6 +27,7 @@ CompileFlags:
     - -fno-tree-switch-conversion  # switch文の最適化制御に関するGCC拡張（RISC-V/ESP32-C3系）
     - -mlongcalls               # Xtensa GCC専用の呼び出し規約フラグ（ESP32/S2/S3系）
     - -mdisable-hardware-atomics  # Xtensa GCC専用のアトミック命令制御フラグ（ESP32/S2/S3系）
+    - -fno-shrink-wrap           # 関数プロローグ省略最適化の制御フラグ（GCC全般。ESP-IDFのビルドで使用）
   Add:
     # clangd は macOS ホスト向けに -isysroot .../MacOSX.sdk を勝手に注入する。
     # その結果 newlib の limits.h の #include_next が macOS SDK の machine/limits.h に
