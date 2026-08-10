@@ -1,28 +1,17 @@
-# e キーでファイルを開くとき、$EDITOR ではなく nvim を使う（入れ子で起動する）
-# lazygitを抜けずにその場で修正できるようにするため
 os:
+  # e キーでファイルを開くときにnvim を使う
   editPreset: nvim
-
 git:
-  # 差分表示を delta（シンタックスハイライト付きdiffページャー）に置き換える
-  # 最初はdelta標準の見た目（コードの色付け・背景塗りつぶし）にしていたが、
-  # 素のgit diffの見た目（赤/緑の文字色・行頭の+-）の方が見やすいという結論になり、
-  # 「変更箇所だけ強調表示される」というdeltaの利点だけを足す方向に寄せた
+  # 差分描画方法
   diffRenderers:
-    - type: stdinFilter
-      # git側では色付けしない。delta自身が生のdiffを解析して色・強調を付けるため
-      # （先に色付けされているとdeltaの解析に支障が出る可能性がある）
-      colorArg: never
+    # gitの色指定オプションを無効
+    - colorArg: never
+      # deltaを使用。配色プリセット指定、ページング無効、コード配色をNordに
+      # 追加/削除行の背景色はtokyonightのDiffAdd/DiffDeleteと完全に同じ色
+      # (green2/red1を25%の濃さで背景に混ぜた色。tokyonight本体のcolors.diffと同一)
+      # 変更箇所の強調は、行の背景色を45%の濃さにして
+      # 「同じ色のまま明るくする」方式（delta標準の挙動と同じ表現）
       command: >-
-        delta --paging=never
-        --syntax-theme=none
-        --minus-style="red" --plus-style="green"
-        --minus-emph-style="red bold ul" --plus-emph-style="green bold ul"
-        --keep-plus-minus-markers
-      # --paging=never          : ページングはlazygit側がやるのでdelta側では不要
-      # --syntax-theme=none     : コード自体のシンタックスハイライトはオフ（素のdiffに寄せる）
-      # --minus-style/plus-style: 削除行=赤文字、追加行=緑文字（背景の塗りつぶしなし）
-      # --minus-emph-style/plus-emph-style
-      #                         : 行の中で実際に変わった部分だけ太字+下線(ul)で強調
-      # --keep-plus-minus-markers
-      #                         : 行頭の `-`/`+` を残す（素のgit diffと同じ見た目にする）
+        delta --dark --paging=never --syntax-theme=Nord
+        --minus-style="syntax #4b2a3d" --plus-style="syntax #2a4556"
+        --minus-emph-style="syntax #6b2e43" --plus-emph-style="syntax #305f6f"
