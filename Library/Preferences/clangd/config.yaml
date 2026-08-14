@@ -3,9 +3,10 @@
 #          Linux は ~/.config/clangd/config.yaml
 # (このファイルを読むのは clangd のみ。Xcode は独自インデクサなので無関係)
 #
-# 下の If: PathMatch により、この設定は PlatformIO 関連のファイルを
-# 編集しているときだけ有効になる。グローバルに置きつつ他の C/C++ プロジェクトへは
-# 影響させないため。新規プロジェクトでも自動で効くので毎回 .clangd を置く必要はない。
+# 下の If: PathMatch により、この設定は PlatformIO 関連のファイルと
+# ~/Documents/dev/embedded 配下のファイルを編集しているときだけ有効になる。
+# グローバルに置きつつ他の C/C++ プロジェクトへは影響させないため。
+# 新規プロジェクトでも自動で効くので毎回 .clangd を置く必要はない。
 #
 # PathMatch は「絶対パスに対する正規表現」。~ は展開されない(書くと設定ごと無効になる)ので
 # ホーム部分は .* で書く。こうするとユーザー名やマシンが変わっても、
@@ -16,7 +17,9 @@
 # clangd がフォールバックのコマンドを使うため、ツールチェインの -isystem が無く、
 # そこで -nostdlibinc を効かせると stdio.h すら見つからなくなって逆効果になる。
 If:
-  PathMatch: .*/PlatformIO/.*
+  PathMatch:
+    - .*/PlatformIO/.*
+    - .*/dev/embedded/.*
 
 # PlatformIO の ESP32/Arduino ツールチェイン(gcc)は clang(d) が解釈できない
 # GCC 専用フラグを付けてくるため、未知の引数エラーになる。
