@@ -10,6 +10,8 @@ autoload -Uz compinit
 compinit
 # 補完時に大文字小文字を区別しない
 zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
+# eim（ESP-IDF Installation Manager）の補完
+eval "$(eim completions zsh)"
 
 # === プロンプト設定 ===
 # プロンプトの表示形式を作業ディレクトリにする
