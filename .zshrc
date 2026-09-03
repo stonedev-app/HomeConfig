@@ -3,6 +3,8 @@
 eval "$(/opt/homebrew/bin/brew shellenv)"
 # claudeパス設定
 export PATH="$HOME/.local/bin:$PATH"
+# raspberry pi pico 環境変数設定
+export PICO_SDK_PATH=$HOME/Documents/dev/embedded/vendor/pico-sdk
 
 # === 補完設定 ===
 # 補完システムの初期化
