@@ -6,6 +6,10 @@ export PATH="$HOME/.local/bin:$PATH"
 # raspberry pi pico 環境変数設定
 export PICO_SDK_PATH=$HOME/Documents/dev/embedded/vendor/pico-sdk
 
+# === エイリアス ===
+# ESP32(Rust)開発用の環境変数を読み込むエイリアス
+alias get_esprs='. $HOME/export-esp.sh'
+
 # === 補完設定 ===
 # 補完システムの初期化
 autoload -Uz compinit
