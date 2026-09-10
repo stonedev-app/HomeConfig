@@ -18,6 +18,9 @@ compinit
 zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
 # eim（ESP-IDF Installation Manager）の補完
 eval "$(eim completions zsh)"
+# uv uvx Shell autocompletion
+eval "$(uv generate-shell-completion zsh)"
+eval "$(uvx --generate-shell-completion zsh)"
 
 # === プロンプト設定 ===
 # プロンプトの表示形式を作業ディレクトリにする
