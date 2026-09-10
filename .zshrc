@@ -16,6 +16,10 @@ autoload -Uz compinit
 compinit
 # 補完時に大文字小文字を区別しない
 zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
+# sshで~/.ssh/configのHost名一覧を表示
+function _ssh {
+  compadd $(grep -F 'Host ' ~/.ssh/config | awk '{print $2}' | grep -v '\*' | sort)
+}
 # eim（ESP-IDF Installation Manager）の補完
 eval "$(eim completions zsh)"
 # uv uvx Shell autocompletion
