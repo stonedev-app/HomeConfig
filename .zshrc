@@ -25,6 +25,9 @@ eval "$(eim completions zsh)"
 # uv uvx Shell autocompletion
 eval "$(uv generate-shell-completion zsh)"
 eval "$(uvx --generate-shell-completion zsh)"
+# veryl verylup の補完
+eval "$(verylup completion zsh veryl)"
+eval "$(verylup completion zsh verylup)"
 
 # === プロンプト設定 ===
 # プロンプトの表示形式を作業ディレクトリにする
