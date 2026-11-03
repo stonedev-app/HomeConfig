@@ -1,11 +1,17 @@
 {
+  "model": "sonnet",
   "enabledPlugins": {
     "clangd-lsp@claude-plugins-official": true,
     "rust-analyzer-lsp@claude-plugins-official": true
   },
   "outputStyle": "Concise",
+  "advisorModel": "opus",
   "tui": "fullscreen",
   "theme": "dark",
   "remoteControlAtStartup": false,
-  "feedbackDrafts": "off"
+  "feedbackDrafts": "off",
+  "statusLine": {
+    "type": "command",
+    "command": "jq -r '[(.model.display_name // empty), (.context_window.used_percentage // empty | \"ctx:\" + (round|tostring) + \"%\"), ([(.rate_limits.five_hour // empty | select(.used_percentage != null) | \"5h:\" + (.used_percentage|round|tostring) + \"%\" + (if .resets_at != null then \"(→\" + (.resets_at|floor|strflocaltime(\"%H:%M\")) + \")\" else \"\" end)), (.rate_limits.seven_day // empty | select(.used_percentage != null) | \"7d:\" + (.used_percentage|round|tostring) + \"%\")] | if length > 0 then join(\" \") else empty end)] | join(\"  \")'"
+  }
 }
